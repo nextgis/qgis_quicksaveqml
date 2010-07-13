@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/plugins/quicksaveqml" >
+        <file>icon.png</file>
+        <file>batch_save.png</file>
+    </qresource>
+</RCC>
