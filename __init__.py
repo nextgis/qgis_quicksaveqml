@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-mVersion = "0.0.5"
+mVersion = "0.1.0"
 def name():
   return "Quickly save default qml"
 def description():
