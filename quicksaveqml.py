@@ -18,9 +18,11 @@ class QuickSaveQml:
   def initGui( self ):
     self.action = QAction( QIcon( ":/plugins/quicksaveqml/icon.png"), "Save default QML", self.iface.mainWindow() )
     self.action.setStatusTip( "Click to save qml file as default (with the same as a layer)" )
+    self.actionBatch.setWhatsThis( "Save QML files as default" )
 
     self.actionBatch = QAction(QIcon( ":/plugins/quicksaveqml/batch_save.png" ), "Save default QML (batch)", self.iface.mainWindow() )
     self.actionBatch.setStatusTip( "Click to save qml files as default (with the same as a layer)" )
+    self.actionBatch.setWhatsThis( "Save QML files as default (batch)" )
 
     QObject.connect( self.action, SIGNAL( "triggered()" ), self.run )
     QObject.connect( self.actionBatch, SIGNAL( "triggered()" ), self.runBatch )
