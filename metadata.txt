@@ -1,0 +1,7 @@
+[general]
+name=Quickly save default qml
+description=Save default QML with one click
+version=Version 0.1.2
+authorName=Maxim Dubinin (sim@gis-lab.info)
+icon=icon.png
+qgisMinimumVersion=1.0.0
