@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
-mVersion = "0.1.2"
+mVersion = "0.1.3"
 def name():
   return "Quickly save default qml"
 def description():
   return "Save default QML with one click"
+def category():
+  return "Plugins"
 def qgisMinimumVersion():
   return "1.0"
 def version():
