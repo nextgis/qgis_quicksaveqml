@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-mVersion = "0.1.3"
+mVersion = "0.1.4"
 def name():
   return "Quickly save default qml"
 def description():
@@ -7,11 +7,11 @@ def description():
 def category():
   return "Plugins"
 def qgisMinimumVersion():
-  return "1.0"
+  return "1.0.0"
 def version():
-  return mVersion
+  return "0.1.4"
 def authorName():
-  return "Maxim Dubinin (sim@gis-lab.info)"
+  return "Maxim Dubinin (NextGIS)"
 def icon():
   return "icon.png"
 def classFactory(iface):

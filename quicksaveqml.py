@@ -4,7 +4,7 @@ from PyQt4.QtGui import *
 from qgis.core import *
 
 # инициализируем ресурсы Qt из файла resouces.py
-import resources
+import resources_rc
 import os
 
 import quicksaveqmldialog

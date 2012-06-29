@@ -1,8 +1,19 @@
 [general]
-name=Quickly save default qml
-description=Save default QML with one click
-category=Plugins
-version=Version 0.1.3
-authorName=Maxim Dubinin (sim@gis-lab.info)
-icon=icon.png
-qgisMinimumVersion=1.0.0
+name = Quickly save default qml
+description = Save default QML with one click
+category = Plugins
+version = 0.1.4
+qgisMinimumVersion = 1.0.0
+
+icon = icon.png
+
+authorName = Maxim Dubinin (NextGIS)
+
+tags = vector, raster, style
+
+homepage =
+tracker = http://hub.qgis.org/projects/quicksaveqml
+repository = http://svn.gis-lab.info/quicksaveqml
+
+experimental = True
+deprecated = False

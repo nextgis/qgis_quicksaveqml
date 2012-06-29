@@ -32,7 +32,7 @@ from PyQt4.QtGui import *
 from qgis.core import *
 from qgis.gui import *
 
-from quicksaveqmldialogbase import Ui_QuickSaveQmlDialog
+from ui_quicksaveqmldialogbase import Ui_QuickSaveQmlDialog
 
 class QuickSaveQmlDialog( QDialog, Ui_QuickSaveQmlDialog ):
   def __init__( self, iface ):
