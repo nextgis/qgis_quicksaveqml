@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from qgis.PyQt.QtCore import *
+from qgis.PyQt.QtGui import *
+from qgis.PyQt.QtWidgets import *
 from qgis.core import *
 
 # инициализируем ресурсы Qt из файла resouces.py
-import resources_rc
+from . import resources_rc
 import os
 
-import quicksaveqmldialog
+from . import quicksaveqmldialog
+from .compat import map_layers
 
 class QuickSaveQml:
 
@@ -24,8 +26,8 @@ class QuickSaveQml:
     self.actionBatch.setStatusTip( "Click to save qml files as default (with the same as a layer)" )
     self.actionBatch.setWhatsThis( "Save QML files as default (batch)" )
 
-    QObject.connect( self.action, SIGNAL( "triggered()" ), self.run )
-    QObject.connect( self.actionBatch, SIGNAL( "triggered()" ), self.runBatch )
+    self.action.triggered.connect(self.run)
+    self.actionBatch.triggered.connect(self.runBatch)
 
     self.iface.addToolBarIcon( self.action )
     self.iface.addToolBarIcon( self.actionBatch )
@@ -35,15 +37,14 @@ class QuickSaveQml:
     self.iface.removeToolBarIcon( self.actionBatch )
 
   def run( self ):
-    layersmap=QgsMapLayerRegistry.instance().mapLayers()
-    layerslist=[]
+    layersmap = map_layers()
+    layerslist = []
     curLayer = self.iface.mapCanvas().currentLayer()
     if curLayer == None:
-      infoString = QString( "No layers selected" )
-      QMessageBox.information( self.iface.mainWindow(), "Warning", infoString )
+      QMessageBox.information( self.iface.mainWindow(), "Warning", "No layers selected" )
       return
     curLayerName = curLayer.source()
-    basename = os.path.splitext( unicode( curLayerName ) )[ 0 ]
+    basename = os.path.splitext( str( curLayerName ) )[ 0 ]
     curLayerQMLName = basename + ".qml"
     curLayer.saveNamedStyle( curLayerQMLName )
 

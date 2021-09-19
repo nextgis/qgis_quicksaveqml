@@ -26,13 +26,15 @@
 #
 #******************************************************************************
 
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
+from qgis.PyQt.QtCore import *
+from qgis.PyQt.QtGui import *
+from qgis.PyQt.QtWidgets import *
 
 from qgis.core import *
 from qgis.gui import *
 
-from ui_quicksaveqmldialogbase import Ui_QuickSaveQmlDialog
+from .ui_quicksaveqmldialogbase import Ui_QuickSaveQmlDialog
+from .compat import QGis, map_layers
 
 class QuickSaveQmlDialog( QDialog, Ui_QuickSaveQmlDialog ):
   def __init__( self, iface ):
@@ -42,19 +44,23 @@ class QuickSaveQmlDialog( QDialog, Ui_QuickSaveQmlDialog ):
 
     self.version = int( QGis.QGIS_VERSION[ 2 ] )
     if self.version > 4:
-      self.mapLayers = self.iface.legendInterface().layers()
+      layers = self.iface.legendInterface().layers()
     else:
-      self.mapLayers = QgsMapLayerRegistry.instance().mapLayers().values()
+      layers = map_layers()
 
-    QObject.connect( self.lvMapLayers, SIGNAL( "clicked( const QModelIndex & )" ), self.doSaveStylesButtonEnabled )
-    QObject.connect( self.rbRasterLayers, SIGNAL( "toggled( bool )" ), self.doSaveStylesButtonEnabled )
-    QObject.connect( self.rbVectorLayers, SIGNAL( "toggled( bool )" ), self.doSaveStylesButtonEnabled )
+    self.mapLayers = []
+    for i in layers:
+        self.mapLayers.append(layers[i])
+
+    self.lvMapLayers.clicked.connect(self.doSaveStylesButtonEnabled)
+    self.rbRasterLayers.toggled.connect(self.doSaveStylesButtonEnabled)
+    self.rbVectorLayers.toggled.connect(self.doSaveStylesButtonEnabled)
 
     self.loadMapLayers()
     self.rbVectorLayers.setChecked( True )
 
   def loadMapLayers( self ):
-    layersNameList = QStringList()
+    layersNameList = []
     if self.version > 4:
       for i in range( len( self.mapLayers ) ):
         layersNameList.append( self.mapLayers[ i ].name() )
@@ -128,7 +134,6 @@ class QuickSaveQmlDialog( QDialog, Ui_QuickSaveQmlDialog ):
     elif type == "critical":
       QMessageBox.critical(self, QApplication.translate("MultiQmlDlg", "Error"), msg )
 
-  @pyqtSignature( "" )
   def on_btnClose_clicked(self):
     #self.writeSettings()
     self.close()
@@ -138,13 +143,11 @@ class QuickSaveQmlDialog( QDialog, Ui_QuickSaveQmlDialog ):
   #   os.remove( self.tmpQmlSrcList[i] )
   # event.accept()
 
-  @pyqtSignature( "" )
   def on_btnSelectAll_clicked(self):
     self.lvMapLayers.selectAll()
     self.btnSelectAll.setEnabled( True )
     self.btnSaveStyles.setEnabled( True )
 
-  @pyqtSignature( "" )
   def on_btnSaveStyles_clicked(self):
     def isRasterQml():
       qmlFile = open( self.fileNameStyle, "rb" )
@@ -163,7 +166,7 @@ class QuickSaveQmlDialog( QDialog, Ui_QuickSaveQmlDialog ):
       if self.version > 4:
         layer = self.mapLayers[i.row()]
       else:
-        layer = self.mapLayers[ self.dictLayers[ i.data().toString() ] ]
+        layer = self.mapLayers[ self.dictLayers[ i.data() ] ]
 
       message, isLoaded = layer.saveDefaultStyle()
       if not isLoaded:
