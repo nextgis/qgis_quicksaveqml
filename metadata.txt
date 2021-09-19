@@ -22,5 +22,5 @@ homepage =
 tracker = http://hub.qgis.org/projects/quicksaveqml
 repository = http://svn.gis-lab.info/quicksaveqml
 
-experimental = True
+experimental = False
 deprecated = False
