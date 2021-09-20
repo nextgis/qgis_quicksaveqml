@@ -28,13 +28,13 @@
 
 import qgis
 
-if hasattr(core, "QGis"):
+if hasattr(qgis.core, "QGis"):
     from qgis.core import QGis
 else:
     from qgis.core import Qgis as QGis
 
 def map_layers():
     if QGis.QGIS_VERSION_INT >= 30000:
-        return core.QgsProject.instance().mapLayers()
+        return qgis.core.QgsProject.instance().mapLayers()
     else:
-        return core.QgsMapLayerRegistry.instance().mapLayers()
+        return qgis.core.QgsMapLayerRegistry.instance().mapLayers()
