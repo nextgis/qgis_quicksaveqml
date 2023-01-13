@@ -1,7 +1,7 @@
 [general]
 name=Quickly save default QML
-about=Save default QML in one click
 description=Save default QML in one click
+about=Save default QML for a layer or layers in one click. Developed by NextGIS. Any feedback is welcome at https://nextgis.com/contact
 version=0.1.6
 qgisMinimumVersion=3.0
 qgisMaximumVersion=3.99
