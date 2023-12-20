@@ -1,7 +1,9 @@
 [general]
 name=Quickly save default QML
 description=Save default QML in one click
+description[ru]=Сохраните QML по умолчанию в один клик
 about=Save default QML for a layer or layers in one click. Developed by NextGIS. Any feedback is welcome at https://nextgis.com/contact
+about[ru]=Сохраните QML по умолчанию для слоя или слоев в один клик. Разработан компанией NextGIS. Любая обратная связь приветствуется по адресу https://nextgis.com/contact
 version=0.1.6
 qgisMinimumVersion=3.0
 qgisMaximumVersion=3.99
@@ -25,6 +27,8 @@ tags = vector, raster, style
 homepage = https://nextgis.com
 tracker = https://github.com/nextgis/qgis_quicksaveqml/issues
 repository = https://github.com/nextgis/qgis_quicksaveqml
+video=https://youtu.be/X23t_5eWdoA
+video[ru]=https://youtu.be/STd8IvKAdfg
 
 experimental = False
 deprecated = False
