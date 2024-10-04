@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-#******************************************************************************
+# ******************************************************************************
 #
 # OSMInfo
 # ---------------------------------------------------------
-# This plugin takes coordinates of a mouse click and gets information about all 
+# This plugin takes coordinates of a mouse click and gets information about all
 # objects from this point from OSM using Overpass API.
 #
 # *****************************************************************************
@@ -24,7 +24,7 @@
 # to the Free Software Foundation, 51 Franklin Street, Suite 500 Boston,
 # MA 02110-1335 USA.
 #
-#******************************************************************************
+# ******************************************************************************
 
 import qgis
 
@@ -32,6 +32,7 @@ if hasattr(qgis.core, "QGis"):
     from qgis.core import QGis
 else:
     from qgis.core import Qgis as QGis
+
 
 def map_layers():
     if QGis.QGIS_VERSION_INT >= 30000:
