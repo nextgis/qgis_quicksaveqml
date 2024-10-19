@@ -18,7 +18,7 @@ class QuickSaveQml:
     self.iface = iface
 
   def initGui( self ):
-    self.action = QAction( QIcon( ":/plugins/quicksaveqml/icon.png"), "Save default QML", self.iface.mainWindow() )
+    self.action = QAction( QIcon( ":/plugins/quicksaveqml/icons/icon.png"), "Save default QML", self.iface.mainWindow() )
     self.action.setStatusTip( "Click to save qml file as default (with the same as a layer)" )
     self.action.setWhatsThis( "Save QML files as default" )
 

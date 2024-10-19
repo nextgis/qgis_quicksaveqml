@@ -33,7 +33,7 @@ from qgis.PyQt.QtWidgets import *
 from qgis.core import *
 from qgis.gui import *
 
-from .ui_quicksaveqmldialogbase import Ui_QuickSaveQmlDialog
+from .ui.ui_quicksaveqmldialogbase import Ui_QuickSaveQmlDialog
 from .compat import QGis, map_layers
 
 class QuickSaveQmlDialog( QDialog, Ui_QuickSaveQmlDialog ):
