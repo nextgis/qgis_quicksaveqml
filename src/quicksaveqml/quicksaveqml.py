@@ -29,7 +29,7 @@ class QuickSaveQml:
         self.action.setWhatsThis("Save QML files as default")
 
         self.actionBatch = QAction(
-            QIcon(":/plugins/quicksaveqml/batch_save.png"),
+            QIcon(":/plugins/quicksaveqml/icons/batch_save.png"),
             "Save default QML (batch)",
             self.iface.mainWindow(),
         )

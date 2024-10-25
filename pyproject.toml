@@ -17,10 +17,6 @@ target-prefix = "ui_"
 qrc-files = ["src/quicksaveqml/resources.qrc"]
 target-suffix = "_rc"
 
-# [tool.qgspb.translations]
-# ts-files = ["src/quicksaveqml/i18n/*.ts"]
-# no-obsolete = true
-
 
 [project.optional-dependencies]
 dev = ["ruff", "pre-commit"]
