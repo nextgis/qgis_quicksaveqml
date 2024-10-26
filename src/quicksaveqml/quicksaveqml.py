@@ -7,8 +7,10 @@ from qgis.core import *
 # инициализируем ресурсы Qt из файла resouces.py
 from . import resources_rc
 import os
+from pathlib import Path
 
 from . import quicksaveqmldialog
+from . import aboutdialog
 from .compat import map_layers
 
 
@@ -38,11 +40,26 @@ class QuickSaveQml:
         )
         self.actionBatch.setWhatsThis("Save QML files as default (batch)")
 
+        self.actionAbout = QAction(
+            QIcon(":/plugins/quicksaveqml/icons/about.png"),
+            "About...",
+            self.iface.mainWindow(),
+        )
+        # self.actionBatch.setStatusTip(
+        #     "Click to save qml files as default (with the same as a layer)"
+        # )
+        # self.actionBatch.setWhatsThis("Save QML files as default (batch)")
+
         self.action.triggered.connect(self.run)
         self.actionBatch.triggered.connect(self.runBatch)
+        self.actionAbout.triggered.connect(self.about)
 
         self.iface.addToolBarIcon(self.action)
         self.iface.addToolBarIcon(self.actionBatch)
+
+        self.iface.addPluginToMenu("Save default QML", self.action)
+        self.iface.addPluginToMenu("Save default QML", self.actionBatch)
+        self.iface.addPluginToMenu("Save default QML", self.actionAbout)
 
     def unload(self):
         self.iface.removeToolBarIcon(self.action)
@@ -64,4 +81,9 @@ class QuickSaveQml:
 
     def runBatch(self):
         dlg = quicksaveqmldialog.QuickSaveQmlDialog(self.iface)
+        dlg.exec()
+
+    def about(self):
+        package_name = str(Path(__file__).parent.name)
+        dlg = aboutdialog.AboutDialog(package_name)
         dlg.exec()
