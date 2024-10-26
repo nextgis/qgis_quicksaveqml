@@ -45,10 +45,6 @@ class QuickSaveQml:
             "About...",
             self.iface.mainWindow(),
         )
-        # self.actionBatch.setStatusTip(
-        #     "Click to save qml files as default (with the same as a layer)"
-        # )
-        # self.actionBatch.setWhatsThis("Save QML files as default (batch)")
 
         self.action.triggered.connect(self.run)
         self.actionBatch.triggered.connect(self.runBatch)
