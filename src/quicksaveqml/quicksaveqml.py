@@ -61,6 +61,10 @@ class QuickSaveQml:
         self.iface.removeToolBarIcon(self.action)
         self.iface.removeToolBarIcon(self.actionBatch)
 
+        self.iface.removePluginMenu("Save default QML", self.action)
+        self.iface.removePluginMenu("Save default QML", self.actionBatch)
+        self.iface.removePluginMenu("Save default QML", self.actionAbout)
+
     def run(self):
         layersmap = map_layers()
         layerslist = []
