@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-#******************************************************************************
+# ******************************************************************************
 #
 # QuickSaveQml
 # ---------------------------------------------------------
@@ -24,7 +24,7 @@
 # to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
 # MA 02111-1307, USA.
 #
-#******************************************************************************
+# ******************************************************************************
 
 from qgis.PyQt.QtCore import *
 from qgis.PyQt.QtGui import *
@@ -33,142 +33,170 @@ from qgis.PyQt.QtWidgets import *
 from qgis.core import *
 from qgis.gui import *
 
-from .ui.ui_quicksaveqmldialogbase import Ui_QuickSaveQmlDialog
+from .ui.quicksaveqmldialogbase import Ui_QuickSaveQmlDialog
 from .compat import QGis, map_layers
 
-class QuickSaveQmlDialog( QDialog, Ui_QuickSaveQmlDialog ):
-  def __init__( self, iface ):
-    QDialog.__init__( self )
-    self.setupUi( self )
-    self.iface = iface
 
-    self.version = int( QGis.QGIS_VERSION[ 2 ] )
-    if self.version > 4:
-      layers = self.iface.legendInterface().layers()
-    else:
-      layers = map_layers()
+class QuickSaveQmlDialog(QDialog, Ui_QuickSaveQmlDialog):
+    def __init__(self, iface):
+        QDialog.__init__(self)
+        self.setupUi(self)
+        self.iface = iface
 
-    self.mapLayers = []
-    for i in layers:
-        self.mapLayers.append(layers[i])
-
-    self.lvMapLayers.clicked.connect(self.doSaveStylesButtonEnabled)
-    self.rbRasterLayers.toggled.connect(self.doSaveStylesButtonEnabled)
-    self.rbVectorLayers.toggled.connect(self.doSaveStylesButtonEnabled)
-
-    self.loadMapLayers()
-    self.rbVectorLayers.setChecked( True )
-
-  def loadMapLayers( self ):
-    layersNameList = []
-    if self.version > 4:
-      for i in range( len( self.mapLayers ) ):
-        layersNameList.append( self.mapLayers[ i ].name() )
-    else:
-      self.dictLayers={}
-      for i in range( len( self.mapLayers ) ):
-        layersNameList.append( self.mapLayers[ i ].name() )
-        self.dictLayers[ self.mapLayers[ i ].name() ] = i
-      layersNameList.sort()
-
-    self.lvMapLayers.setModel( QStringListModel( layersNameList, self ) )
-    self.lvMapLayers.setSelectionMode( QAbstractItemView.ExtendedSelection )
-    self.lvMapLayers.setEditTriggers( QAbstractItemView.NoEditTriggers )
-
-    if self.lvMapLayers.model().rowCount() == 0:
-      self.btnSelectAll.setEnabled( False )
-
-  def on_rbRasterLayers_toggled( self, checked ):
-    for i in range( len( self.mapLayers ) ):
-      if self.version > 4:
-        idx = self.lvMapLayers.model().index( i, 0 )
-        layerName = self.lvMapLayers.model().data( idx, 0 ).toString()
-        for j in range( len( self.mapLayers ) ):
-          if self.mapLayers[j].name() == layerName:
-            break
-        if checked and ( self.mapLayers[i].type() != QgsMapLayer.VectorLayer ):
-          self.lvMapLayers.setRowHidden( i, False )
-        elif not checked and ( self.mapLayers[i].type() == QgsMapLayer.RasterLayer ):
-          self.lvMapLayers.setRowHidden( i, True )
+        self.version = int(QGis.QGIS_VERSION[2])
+        if self.version > 4:
+            layers = self.iface.legendInterface().layers()
         else:
-          self.lvMapLayers.setRowHidden( i, True )
+            layers = map_layers()
 
-      if checked and ( self.mapLayers[i].type() != QgsMapLayer.VectorLayer ):
-        self.lvMapLayers.setRowHidden( i, False )
-      elif not checked and ( self.mapLayers[i].type() == QgsMapLayer.RasterLayer ):
-        self.lvMapLayers.setRowHidden( i, True )
-      else:
-        self.lvMapLayers.setRowHidden( i, True )
+        self.mapLayers = []
+        for i in layers:
+            self.mapLayers.append(layers[i])
 
-  def on_rbVectorLayers_toggled( self, checked ):
-    for i in range( len( self.mapLayers ) ):
-      if self.version > 4:
-        idx = self.lvMapLayers.model().index( i, 0 )
-        layerName = self.lvMapLayers.model().data( idx, 0 ).toString()
-        for j in range( len( self.mapLayers ) ):
-          if self.mapLayers[j].name() == layerName:
-            break
-        if checked and ( self.mapLayers[i].type() != QgsMapLayer.RasterLayer ):
-          self.lvMapLayers.setRowHidden( i, False )
-        elif not checked and ( self.mapLayers[i].type() == QgsMapLayer.VectorLayer ):
-          self.lvMapLayers.setRowHidden( i, True )
+        self.lvMapLayers.clicked.connect(self.doSaveStylesButtonEnabled)
+        self.rbRasterLayers.toggled.connect(self.doSaveStylesButtonEnabled)
+        self.rbVectorLayers.toggled.connect(self.doSaveStylesButtonEnabled)
+
+        self.loadMapLayers()
+        self.rbVectorLayers.setChecked(True)
+
+    def loadMapLayers(self):
+        layersNameList = []
+        if self.version > 4:
+            for i in range(len(self.mapLayers)):
+                layersNameList.append(self.mapLayers[i].name())
         else:
-          self.lvMapLayers.setRowHidden( i, True )
+            self.dictLayers = {}
+            for i in range(len(self.mapLayers)):
+                layersNameList.append(self.mapLayers[i].name())
+                self.dictLayers[self.mapLayers[i].name()] = i
+            layersNameList.sort()
 
-      if checked and ( self.mapLayers[i].type() != QgsMapLayer.RasterLayer ):
-        self.lvMapLayers.setRowHidden( i, False )
-      elif not checked and ( self.mapLayers[i].type() == QgsMapLayer.VectorLayer ):
-        self.lvMapLayers.setRowHidden( i, True )
-      else:
-        self.lvMapLayers.setRowHidden( i, True )
+        self.lvMapLayers.setModel(QStringListModel(layersNameList, self))
+        self.lvMapLayers.setSelectionMode(QAbstractItemView.ExtendedSelection)
+        self.lvMapLayers.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
-  def doSaveStylesButtonEnabled( self ):
-    if len( self.lvMapLayers.selectedIndexes() ) == 0:
-      self.btnSaveStyles.setEnabled( False )
-    else:
-      self.btnSaveStyles.setEnabled( True )
+        if self.lvMapLayers.model().rowCount() == 0:
+            self.btnSelectAll.setEnabled(False)
 
-  def myPluginMessage( self, msg, type ):
-    if type == "information":
-      QMessageBox.information(self, QApplication.translate("MultiQmlDlg", "Information"), msg )
-    elif type == "critical":
-      QMessageBox.critical(self, QApplication.translate("MultiQmlDlg", "Error"), msg )
+    def on_rbRasterLayers_toggled(self, checked):
+        for i in range(len(self.mapLayers)):
+            if self.version > 4:
+                idx = self.lvMapLayers.model().index(i, 0)
+                layerName = self.lvMapLayers.model().data(idx, 0).toString()
+                for j in range(len(self.mapLayers)):
+                    if self.mapLayers[j].name() == layerName:
+                        break
+                if checked and (
+                    self.mapLayers[i].type() != QgsMapLayer.VectorLayer
+                ):
+                    self.lvMapLayers.setRowHidden(i, False)
+                elif not checked and (
+                    self.mapLayers[i].type() == QgsMapLayer.RasterLayer
+                ):
+                    self.lvMapLayers.setRowHidden(i, True)
+                else:
+                    self.lvMapLayers.setRowHidden(i, True)
 
-  def on_btnClose_clicked(self):
-    #self.writeSettings()
-    self.close()
+            if checked and (
+                self.mapLayers[i].type() != QgsMapLayer.VectorLayer
+            ):
+                self.lvMapLayers.setRowHidden(i, False)
+            elif not checked and (
+                self.mapLayers[i].type() == QgsMapLayer.RasterLayer
+            ):
+                self.lvMapLayers.setRowHidden(i, True)
+            else:
+                self.lvMapLayers.setRowHidden(i, True)
 
-  #def closeEvent( self, event ):
-  # for i in range( len( self.mapLayers ) ):
-  #   os.remove( self.tmpQmlSrcList[i] )
-  # event.accept()
+    def on_rbVectorLayers_toggled(self, checked):
+        for i in range(len(self.mapLayers)):
+            if self.version > 4:
+                idx = self.lvMapLayers.model().index(i, 0)
+                layerName = self.lvMapLayers.model().data(idx, 0).toString()
+                for j in range(len(self.mapLayers)):
+                    if self.mapLayers[j].name() == layerName:
+                        break
+                if checked and (
+                    self.mapLayers[i].type() != QgsMapLayer.RasterLayer
+                ):
+                    self.lvMapLayers.setRowHidden(i, False)
+                elif not checked and (
+                    self.mapLayers[i].type() == QgsMapLayer.VectorLayer
+                ):
+                    self.lvMapLayers.setRowHidden(i, True)
+                else:
+                    self.lvMapLayers.setRowHidden(i, True)
 
-  def on_btnSelectAll_clicked(self):
-    self.lvMapLayers.selectAll()
-    self.btnSelectAll.setEnabled( True )
-    self.btnSaveStyles.setEnabled( True )
+            if checked and (
+                self.mapLayers[i].type() != QgsMapLayer.RasterLayer
+            ):
+                self.lvMapLayers.setRowHidden(i, False)
+            elif not checked and (
+                self.mapLayers[i].type() == QgsMapLayer.VectorLayer
+            ):
+                self.lvMapLayers.setRowHidden(i, True)
+            else:
+                self.lvMapLayers.setRowHidden(i, True)
 
-  def on_btnSaveStyles_clicked(self):
-    def isRasterQml():
-      qmlFile = open( self.fileNameStyle, "rb" )
-      line = qmlFile.readline()
-      result = False
-      while line != "":
-        if "<rasterproperties>" in line:
-          result = True
-          break
-        line = qmlFile.readline()
-      qmlFile.close()
-      return result
+    def doSaveStylesButtonEnabled(self):
+        if len(self.lvMapLayers.selectedIndexes()) == 0:
+            self.btnSaveStyles.setEnabled(False)
+        else:
+            self.btnSaveStyles.setEnabled(True)
 
-    selected = self.lvMapLayers.selectedIndexes()
-    for i in selected:
-      if self.version > 4:
-        layer = self.mapLayers[i.row()]
-      else:
-        layer = self.mapLayers[ self.dictLayers[ i.data() ] ]
+    def myPluginMessage(self, msg, type):
+        if type == "information":
+            QMessageBox.information(
+                self, QApplication.translate("MultiQmlDlg", "Information"), msg
+            )
+        elif type == "critical":
+            QMessageBox.critical(
+                self, QApplication.translate("MultiQmlDlg", "Error"), msg
+            )
 
-      message, isLoaded = layer.saveDefaultStyle()
-      if not isLoaded:
-        self.myPluginMessage( QApplication.translate( "MultiQmlDlg", "Unable to save qml style for layer \"%1\"\n%2." )\
-          .arg( layer.name() ).arg( message ), "critical" )
+    def on_btnClose_clicked(self):
+        # self.writeSettings()
+        self.close()
+
+    # def closeEvent( self, event ):
+    # for i in range( len( self.mapLayers ) ):
+    #   os.remove( self.tmpQmlSrcList[i] )
+    # event.accept()
+
+    def on_btnSelectAll_clicked(self):
+        self.lvMapLayers.selectAll()
+        self.btnSelectAll.setEnabled(True)
+        self.btnSaveStyles.setEnabled(True)
+
+    def on_btnSaveStyles_clicked(self):
+        def isRasterQml():
+            qmlFile = open(self.fileNameStyle, "rb")
+            line = qmlFile.readline()
+            result = False
+            while line != "":
+                if "<rasterproperties>" in line:
+                    result = True
+                    break
+                line = qmlFile.readline()
+            qmlFile.close()
+            return result
+
+        selected = self.lvMapLayers.selectedIndexes()
+        for i in selected:
+            if self.version > 4:
+                layer = self.mapLayers[i.row()]
+            else:
+                layer = self.mapLayers[self.dictLayers[i.data()]]
+
+            message, isLoaded = layer.saveDefaultStyle()
+            if not isLoaded:
+                self.myPluginMessage(
+                    QApplication.translate(
+                        "MultiQmlDlg",
+                        'Unable to save qml style for layer "%1"\n%2.',
+                    )
+                    .arg(layer.name())
+                    .arg(message),
+                    "critical",
+                )
