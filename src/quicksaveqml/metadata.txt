@@ -4,17 +4,9 @@ description=Save default QML in one click
 description[ru]=Сохраните QML-стиль в один клик
 about=Save default QML for a layer or layers in one click. Developed by NextGIS. Any feedback is welcome at https://nextgis.com/contact
 about[ru]=Сохраните QML-стиль для слоя или набора слоев в один клик. Разработан NextGIS. Любые отзывы приветствуются на https://nextgis.com/contact
-version=0.1.6
-qgisMinimumVersion=3.0
+version=0.2.0
+qgisMinimumVersion=3.22
 qgisMaximumVersion=3.99
-
-changelog=
-        0.1.6:
-            * Cleanup
-        0.1.5:
-            * QGIS 3 support added
-        0.1.4:
-            * Quickly save default qml
 
 icon=icons/icon.png
 
@@ -32,3 +24,14 @@ video[ru] = https://www.youtube.com/watch?v=STd8IvKAdfg
 
 experimental = False
 deprecated = False
+
+changelog=
+        0.2.0
+            * Updated the "About plugin" dialog
+            * Added plugin item to help menu
+        0.1.6:
+            * Cleanup
+        0.1.5:
+            * QGIS 3 support added
+        0.1.4:
+            * Quickly save default qml

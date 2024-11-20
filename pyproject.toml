@@ -1,6 +1,6 @@
 [project]
 name = "quicksaveqml"
-version = "0.1.6"
+version = "0.2.0"
 readme = "README.md"
 license = { file = "LICENSE" }
 
@@ -15,6 +15,11 @@ compile = true
 [tool.qgspb.resources]
 qrc-files = ["src/quicksaveqml/resources.qrc"]
 target-suffix = "_rc"
+
+[tool.qgspb.translations]
+ts-files = ["src/quicksaveqml/i18n/*.ts"]
+no-obsolete = true
+
 
 
 [project.optional-dependencies]
