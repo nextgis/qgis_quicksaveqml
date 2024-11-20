@@ -57,6 +57,15 @@ class QuickSaveQml:
         self.iface.addPluginToMenu("Save default QML", self.actionBatch)
         self.iface.addPluginToMenu("Save default QML", self.actionAbout)
 
+        self.__show_help_action = QAction(
+            QIcon(":/plugins/quicksaveqml/icons/icon.png"),
+            "Quickly save default QML",
+        )
+        self.__show_help_action.triggered.connect(self.about)
+        plugin_help_menu = self.iface.pluginHelpMenu()
+        assert plugin_help_menu is not None
+        plugin_help_menu.addAction(self.__show_help_action)
+
     def unload(self):
         self.iface.removeToolBarIcon(self.action)
         self.iface.removeToolBarIcon(self.actionBatch)
