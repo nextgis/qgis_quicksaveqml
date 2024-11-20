@@ -18,6 +18,9 @@ class QuickSaveQml:
     def __init__(self, iface):
         """Initialize the class"""
         self.iface = iface
+        self.plugin_dir = os.path.dirname(__file__)
+        self._translator = None
+        self.__init_translator()
 
     def initGui(self):
         self.action = QAction(
@@ -42,7 +45,7 @@ class QuickSaveQml:
 
         self.actionAbout = QAction(
             QIcon(":/plugins/quicksaveqml/icons/about.png"),
-            "About...",
+            self.tr("About plugin…"),
             self.iface.mainWindow(),
         )
 
@@ -91,6 +94,29 @@ class QuickSaveQml:
     def runBatch(self):
         dlg = quicksaveqmldialog.QuickSaveQmlDialog(self.iface)
         dlg.exec()
+
+    def __init_translator(self):
+        # initialize locale
+        locale = QSettings().value("locale/userLocale")
+
+        def add_translator(locale_path):
+            if not os.path.exists(locale_path):
+                return
+            translator = QTranslator()
+            translator.load(locale_path)
+            QCoreApplication.installTranslator(translator)
+            self._translator = translator  # Should be kept in memory
+
+        add_translator(
+            os.path.join(
+                self.plugin_dir,
+                "i18n",
+                "quicksaveqml_{}.qm".format(locale, locale.upper()),
+            )
+        )
+
+    def tr(self, message):
+        return QCoreApplication.translate(__class__.__name__, message)
 
     def about(self):
         package_name = str(Path(__file__).parent.name)
